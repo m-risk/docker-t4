@@ -1,6 +1,6 @@
 FROM php:fpm-alpine
 
-MAINTAINER Pablo Perich "pablo.perich@halftau.com"
+MAINTAINER Rafael Cid "rcid@m-risk.com"
 
 COPY php-cli.ini /usr/local/etc/php/
 COPY www-php-ini.conf /usr/local/etc/php-fpm.d/

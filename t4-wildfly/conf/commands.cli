@@ -1,0 +1,31 @@
+module add --name=org.postgres --resources=/tmp/postgresql-9.4.1212.jar --dependencies=javax.api,javax.transaction.api
+
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)
+
+data-source add --jndi-name=java:/LoginDBDS --name=LoginDBDS --connection-url=jdbc:postgresql://db:5432/login --driver-name=postgres --user-name=web --password=php
+
+data-source add --jndi-name=java:/StorageDBDS --name=StorageDBDS --connection-url=jdbc:postgresql://db:5432/storage --driver-name=postgres --user-name=web --password=php
+
+data-source add --jndi-name=java:/T4DBDS --name=T4DBDS --connection-url=jdbc:postgresql://db:5432/T4 --driver-name=postgres --user-name=web --password=php
+
+module add --name=com.google.code.gson.gson --resources=/tmp/gson-2.7.jar
+
+module add --name=org.apache.commons.commons-lang3 --resources=/tmp/commons-lang3-3.1.jar
+
+module add --name=org.ow2.asm.asm --resources=/tmp/asm-5.0.3.jar
+module add --name=org.ow2.asm.asm-tree --resources=/tmp/asm-tree-5.0.3.jar --dependencies=org.ow2.asm.asm
+module add --name=org.ow2.asm.asm-analysis --resources=/tmp/asm-analysis-5.0.3.jar --dependencies=org.ow2.asm.asm-tree,org.ow2.asm.asm
+module add --name=org.ow2.asm.asm-util --resources=/tmp/asm-util-5.0.3.jar --dependencies=org.ow2.asm.asm-tree,org.ow2.asm.asm
+
+module add --name=org.parboiled.parboiled-core --resources=/tmp/parboiled-core-1.1.7.jar
+module add --name=org.parboiled.parboiled-java --resources=/tmp/parboiled-java-1.1.7.jar --dependencies=org.parboiled.parboiled-core,org.ow2.asm.asm,org.ow2.asm.asm-tree,org.ow2.asm.asm-analysis,org.ow2.asm.asm-util
+
+module add --name=com.googlecode.concurrentlinkedhashmap.concurrentlinkedhashmap-lru --resources=/tmp/concurrentlinkedhashmap-lru-1.4.2.jar --dependencies=sun.jdk
+
+module add --name=org.jtwig.jtwig-reflection --resources=/tmp/jtwig-reflection-1.16.jar --dependencies=com.google.guava
+module add --name=org.jtwig.jtwig-core --resources=/tmp/jtwig-core-5.64.jar --dependencies=org.jtwig.jtwig-reflection,com.google.guava,org.parboiled.parboiled-core,org.parboiled.parboiled-java,com.googlecode.concurrentlinkedhashmap.concurrentlinkedhashmap-lru,org.slf4j,org.apache.commons.commons-lang3
+module add --name=org.jtwig.jtwig-web --resources=/tmp/jtwig-web-1.59.jar --dependencies=org.jtwig.jtwig-core,com.google.guava,javax.servlet.api,org.apache.httpcomponents
+
+module add --name=org.gnu.gettext.libintl --resources=/tmp/libintl-0.18.3.jar
+
+/subsystem=ee:write-attribute(name="global-modules",value=[{"name" => "org.hibernate","slot" => "5.2"},{"name" => "org.jtwig.jtwig-web","slot" => "main"},{"name" => "org.jtwig.jtwig-core","slot" => "main"},{"name" => "org.apache.commons.commons-lang3","slot" => "main"},{"name" => "com.google.guava","slot" => "main"},{"name" => "com.google.code.gson.gson","slot" => "main"},{"name" => "org.gnu.gettext.libintl","slot" => "main"}])

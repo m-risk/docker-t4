@@ -1,5 +1,5 @@
 FROM nginx:stable-alpine
 
-MAINTAINER Rafael Cid "rcid@m-risk.com"
+LABEL maintainer="rcid@m-risk.com"
 
 COPY config/* /etc/nginx/conf.d/

@@ -1,6 +1,6 @@
-FROM php:fpm-alpine
+FROM php:7.4.27-fpm-alpine
 
-MAINTAINER Rafael Cid "rcid@m-risk.com"
+LABEL maintainer="rcid@m-risk.com"
 
 COPY php-cli.ini /usr/local/etc/php/
 COPY www-php-ini.conf /usr/local/etc/php-fpm.d/
@@ -44,12 +44,6 @@ RUN chmod 622 /usr/local/etc/php-fpm.d/* && \
     docker-php-ext-enable opcache && \
     docker-php-ext-install -j$(nproc) pcntl zip gettext pdo_pgsql sockets xmlrpc xsl gd &&  \
     apk del devpacks --purge
-	
-RUN mkdir -p /var/lib/mrisk/bo/upload && \
-    chown www-data /var/lib/mrisk/bo/upload && \
-    chgrp www-data /var/lib/mrisk/bo/upload
-    
-VOLUME /var/lib/mrisk/bo/upload
 
 WORKDIR /media/sf_T4
 
